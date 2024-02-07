@@ -1,0 +1,3 @@
+D:/Facultate/An2/Algoritmi si structuri de date/Teme/2/GitHub/cmake-build-debug/CMakeFiles/GitHub.dir
+D:/Facultate/An2/Algoritmi si structuri de date/Teme/2/GitHub/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/Facultate/An2/Algoritmi si structuri de date/Teme/2/GitHub/cmake-build-debug/CMakeFiles/rebuild_cache.dir

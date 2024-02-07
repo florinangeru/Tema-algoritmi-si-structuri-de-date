@@ -1,4 +1,4 @@
-// Created by Florin on 01/02/2024.
+// Created by Florin on 04/02/2024.
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -32,62 +32,62 @@ void afisare (int v[], int n)
 }
 
 
-// Sortare prin selectie------------------------------------------------------------------------------------------------
-void sortareSelectie(int v[], int n)
+// 1. Sortare prin selectie---------------------------------------------------------------------------------------------
+void sortareSelectie(int v[], int n) // vectorul v cu n elemente
 {
-    int i, j, min_idx, temp;
-    for (i = 1; i < n; i++) // Ajustam indexul de start la 1
+    int i, j, min_idx, temp; // i, j - indicii vectorului, min_idx - indicele elementului minim
+    for (i = 1; i < n; i++) // Buclam prin vector
     {
-        min_idx = i;
-        for (j = i + 1; j <= n; j++)
+        min_idx = i; // Consideram primul element neordonat ca fiind minimul
+        for (j = i + 1; j <= n; j++) // Cautam minimul in vectorul neordonat
         {
-            if (v[j] < v[min_idx])
-                min_idx = j;
+            if (v[j] < v[min_idx])  // Daca gasim un element mai mic decat minimul curent
+                min_idx = j; // Il consideram minim
         }
 
         // Schimbam elementul minim gasit cu primul element neordonat
-        temp = v[min_idx];
+        temp = v[min_idx]; // Schimbam elementul minim gasit cu primul element neordonat
         v[min_idx] = v[i];
         v[i] = temp;
     }
 }
 
 
-// Sortare prin inserare------------------------------------------------------------------------------------------------
-void sortareInserare(int v[], int n)
+// 2. Sortare prin inserare---------------------------------------------------------------------------------------------
+void sortareInserare(int v[], int n) // vectorul v cu n elemente
 {
-    int i, cheie, j;
-    for (i = 2; i <= n; i++)
+    int i, cheie, j; // i, j - indicii vectorului, cheie - elementul curent
+    for (i = 2; i <= n; i++) // Buclam prin vector
     {
-        cheie = v[i];
-        j = i - 1;
+        cheie = v[i]; // Consideram elementul curent ca fiind cheia
+        j = i - 1; // Consideram elementele din stanga cheii ca fiind ordonate
 
-        // Mutati elementele v[1..i-1], care sunt mai mari decat cheia, la o pozitie inainte de pozitia lor curenta
+        // Mutam elementele v[1..i-1], care sunt mai mari decat cheia, la o pozitie inainte de pozitia lor curenta
         while (j >= 1 && v[j] > cheie)
         {
-            v[j + 1] = v[j];
-            j = j - 1;
+            v[j + 1] = v[j]; // Mutam elementul la o pozitie inainte
+            j = j - 1; // Mutam la stanga
         }
-        v[j + 1] = cheie;
+        v[j + 1] = cheie; // Mutam cheia la pozitia sa corecta
     }
 }
 
 
-// Sortare prin metoda bulelor (Bubblesort)-----------------------------------------------------------------------------
-void bubbleSort(int v[], int n)
+// 3. Sortare prin metoda bulelor (Bubblesort)--------------------------------------------------------------------------
+void bubbleSort(int v[], int n) // vectorul v cu n elemente
 {
-    int i, j, temp;
+    int i, j, temp; // i, j - indicii vectorului, temp - variabila temporara
     bool swapped; // aceasta variabila verifica daca a avut loc o interschimbare
-    for (i = 1; i < n; i++) // Buclează prin vector
+    for (i = 1; i < n; i++) // Buclam prin vector
     {
-        swapped = false;
+        swapped = false; // Initializam variabila swapped ca fiind falsa
         for (j = 1; j <= n - i; j++) // Mergi prin vector de la început până la n-i
         {
             if (v[j] > v[j + 1]) // Compară elementele adiacente
             {
                 // Dacă elementul curent este mai mare decât următorul, interschimbă-le
                 temp = v[j];
-                v[j] = v[j + 1];
+                v[j] = v[j + 1]; // Schimbă elementele
                 v[j + 1] = temp;
                 swapped = true; // Marchează că a avut loc o interschimbare
             }
@@ -99,74 +99,73 @@ void bubbleSort(int v[], int n)
 }
 
 
-// Sortarea prin interclasare (Mergesort)-------------------------------------------------------------------------------
-void mergeSort(int v[], int left, int mid, int right) {
-    int n1 = mid - left + 1;
-    int n2 = right - mid;
-    int L[n1], R[n2];
+// 4. Sortarea prin interclasare (Mergesort)----------------------------------------------------------------------------
+void mergeSort(int v[], int left, int mid, int right) { // vectorul v cu n elemente si indicii left, mid, right pentru a separa vectorul
+    int n1 = mid - left + 1; // Numarul de elemente din prima jumatate
+    int n2 = right - mid; // Numarul de elemente din a doua jumatate
+    int L[n1], R[n2]; // Vectorii temporari pentru a stoca elementele din jumatati
 
-    for (int i = 0; i < n1; i++)
-        L[i] = v[left + i];
-    for (int j = 0; j < n2; j++)
-        R[j] = v[mid + 1 + j];
+    for (int i = 0; i < n1; i++) // Copiem elementele in vectorii temporari
+        L[i] = v[left + i]; // Copiem elementele din prima jumatate
+    for (int j = 0; j < n2; j++) // Copiem elementele in vectorii temporari
+        R[j] = v[mid + 1 + j]; // Copiem elementele din a doua jumatate
 
-    int i = 0, j = 0, k = left;
-    while (i < n1 && j < n2) {
-        if (L[i] <= R[j]) {
-            v[k] = L[i++];
+    int i = 0, j = 0, k = left; // Indicii pentru vectorii temporari si vectorul principal
+    while (i < n1 && j < n2) { // Interclasam vectorii temporari in vectorul principal
+        if (L[i] <= R[j]) { // Daca elementul din prima jumatate este mai mic sau egal cu elementul din a doua jumatate
+            v[k] = L[i++]; // Copiem elementul din prima jumatate in vectorul principal
         } else {
-            v[k] = R[j++];
+            v[k] = R[j++]; // Copiem elementul din a doua jumatate in vectorul principal
         }
-        k++;
+        k++; // Incrementam indicele vectorului principal
     }
 
     while (i < n1) {
-        v[k++] = L[i++];
+        v[k++] = L[i++]; // Copiem elementele ramase din prima jumatate in vectorul principal
     }
     while (j < n2) {
-        v[k++] = R[j++];
+        v[k++] = R[j++]; // Copiem elementele ramase din a doua jumatate in vectorul principal
     }
 }
 
-void mergeSort(int v[], int left, int right) {
-    if (left < right) {
-        int mid = left + (right - left) / 2;
-        mergeSort(v, left, mid);
-        mergeSort(v, mid + 1, right);
-        mergeSort(v, left, mid, right);
+void mergeSort(int v[], int left, int right) { // vectorul v cu n elemente si indicii left, right pentru a separa vectorul
+    if (left < right) { // Daca vectorul are mai mult de un element
+        int mid = left + (right - left) / 2; // Gasim mijlocul vectorului
+        mergeSort(v, left, mid); // Sortam prima jumatate
+        mergeSort(v, mid + 1, right); // Sortam a doua jumatate
+        mergeSort(v, left, mid, right); // Interclasam jumatatile sortate
     }
 }
 
 
-// Sortarea rapida (Quicksort)------------------------------------------------------------------------------------------
-void swap(int* a, int* b) {
-    int t = *a;
-    *a = *b;
+// 5. Sortarea rapida (Quicksort)---------------------------------------------------------------------------------------
+void swap(int* a, int* b) { // Functie pentru interschimbarea a doua elemente
+    int t = *a; // Variabila temporara pentru interschimbare
+    *a = *b; // Interschimbare
     *b = t;
 }
 
-int partition(int v[], int low, int high) {
-    int pivot = v[high]; // pivot
+int partition(int v[], int low, int high) { // vectorul v cu n elemente si indicii low, high pentru a separa vectorul
+    int pivot = v[high]; // pivot (elementul ales ca pivot)
     int i = (low - 1); // Indexul elementului mai mic
 
-    for (int j = low; j <= high - 1; j++) {
+    for (int j = low; j <= high - 1; j++) { // Buclam prin vector
         // Dacă elementul curent este mai mic sau egal cu pivotul
-        if (v[j] <= pivot) {
-            i++; // incrementați indexul elementului mai mic
-            swap(&v[i], &v[j]);
+        if (v[j] <= pivot) { // Daca elementul curent este mai mic sau egal cu pivotul
+            i++; // incrementam indexul elementului mai mic
+            swap(&v[i], &v[j]); // interschimbam elementele
         }
     }
-    swap(&v[i + 1], &v[high]);
-    return (i + 1);
+    swap(&v[i + 1], &v[high]); // interschimbam elementele
+    return (i + 1); // returnam indexul pivotului
 }
 
-void quickSort(int v[], int low, int high) {
-    if (low < high) {
+void quickSort(int v[], int low, int high) { // vectorul v cu n elemente si indicii low, high pentru a separa vectorul
+    if (low < high) { // Daca vectorul are mai mult de un element
         /* pi este indexul de partitionare, v[pi] este acum la locul potrivit */
-        int pi = partition(v, low, high);
+        int pi = partition(v, low, high); // Partitionam vectorul si returneaza indexul pivotului
 
-        // Sortează separat elementele înainte
-        // și după partitionare
+        // Sorteaza separat elementele inainte și după partitionare
         quickSort(v, low, pi - 1);
         quickSort(v, pi + 1, high);
     }
